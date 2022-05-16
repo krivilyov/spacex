@@ -1,0 +1,54 @@
+.container {
+    font-family: 'Space Mono', monospace;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 70px 0;
+}
+
+h1 {
+    font-weight: bold;
+    margin: 0;
+    font-size: 32px;
+    line-height: 38px;
+}
+
+.earth-img {
+    width: 50px;
+    height: 50px;
+    margin: 0 15px;
+}
+
+.board-section {
+    display: flex;
+}
+
+.board-column {
+    box-sizing: border-box;
+    flex: 0 0 33.3%;
+    width: 33.3%;
+    margin: 0 10px;
+}
+
+.board {
+    box-sizing: border-box;
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 15px;
+    min-height: 202px;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    text-align: center;
+    font-size: 24px;
+    line-height: 28px;
+    margin: 0 0 15px 0;
+}

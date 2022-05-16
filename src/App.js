@@ -1,7 +1,11 @@
+import Intro from './components/intro/Intro';
+
 function App() {
-  return (
-    <div>React</div>
-  );
+    return (
+        <>
+          <Intro />
+        </>
+    );
 }
 
 export default App;

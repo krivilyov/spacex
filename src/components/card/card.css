@@ -1,0 +1,25 @@
+.card {
+    cursor: grab;
+    box-sizing: border-box;
+    min-height: 170px;
+    padding: 15px;
+    border: 2px solid #999;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.card:last-child {
+    margin-bottom: 0;
+}
+
+.card-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.card-description {
+    font-size: 18px;
+    line-height: 24px;
+}
