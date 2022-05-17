@@ -53,10 +53,6 @@ export default function Intro () {
 
 	}, []);
 
-	function boardDragEnterHandler (e) {
-
-	}
-
 	function boardDragOverHandler (e) {
 		e.preventDefault();
 	}
@@ -83,7 +79,6 @@ export default function Intro () {
 		}
 	}
 
-
 	return (
 		<div className="container">
 			<div className="title-section">
@@ -105,7 +100,6 @@ export default function Intro () {
 				<div className="board-column">
 					<h2>Launches</h2>
 					<div className="board"
-						 onDragEnter={e => boardDragEnterHandler(e)}
 						 onDragOver={e => boardDragOverHandler(e)}
 						 onDrop={e => boardDropHandler(e)}
 					>
@@ -121,7 +115,6 @@ export default function Intro () {
 				<div className="board-column">
 					<h2>My launches</h2>
 					<div className="board"
-						 onDragEnter={e => boardDragEnterHandler(e)}
 						 onDragOver={e => boardDragOverHandler(e)}
 						 onDrop={e => boardDropHandler(e)}
 					>
