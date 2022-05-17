@@ -7,6 +7,7 @@ import axios from "axios";
 export default function Intro () {
 	const [pastLaunches, setPastLaunches] = useState([]);
 	const [launches, setLaunches] = useState([]);
+	const [currentCard, setCurrentCard] = useState(null);
 
 	useEffect(() => {
 		const getLaunches = async () => {
@@ -21,8 +22,6 @@ export default function Intro () {
 					}
 				});
 
-				setPastLaunches(res_1.data.docs);
-
 				const currentUnixTime = Math.round(+new Date()/1000);
 				const res_2 = await axios.post("https://api.spacexdata.com/v5/launches/query", {
 					"query": {
@@ -35,8 +34,16 @@ export default function Intro () {
 					}
 				});
 
-				setLaunches(res_2.data.docs);
+				const launchesFromAPI = res_2.data.docs;
+				//created copy array for add reserved property
+				const formattedLaunches = launchesFromAPI.map(function (current){
+					let launche = Object.assign({}, current);
+					launche.reserved = 0;
+					return launche;
+				})
 
+				setPastLaunches(res_1.data.docs);
+				setLaunches(formattedLaunches);
 			} catch (error) {
 				console.log(error);
 			}
@@ -45,6 +52,37 @@ export default function Intro () {
 		getLaunches();
 
 	}, []);
+
+	function boardDragEnterHandler (e) {
+
+	}
+
+	function boardDragOverHandler (e) {
+		e.preventDefault();
+	}
+
+	function boardDropHandler (e) {
+		e.preventDefault();
+
+		if(currentCard) {
+			// find card by id in our array and change status reserved
+			const changedLaunches = launches.map(function (current){
+				let launche = Object.assign({}, current);
+				if (launche.id === currentCard.id) {
+					if(currentCard.reserved < 1) {
+						launche.reserved = 1;
+					} else {
+						launche.reserved = 0;
+					}
+				}
+
+				return launche;
+			})
+
+			setLaunches(changedLaunches);
+		}
+	}
+
 
 	return (
 		<div className="container">
@@ -58,26 +96,42 @@ export default function Intro () {
 					<h2>Past launches</h2>
 					<div className="board">
 						{pastLaunches.length > 0 && (
-							pastLaunches.map((launchData, index) => (
-								<Card launchData={launchData} key={index} type={'past'} />
+							pastLaunches.map((card, index) => (
+								<Card card={card} key={index} draggable={false} setCurrentCard={setCurrentCard} />
 							))
 						)}
 					</div>
 				</div>
 				<div className="board-column">
 					<h2>Launches</h2>
-					<div className="board">
+					<div className="board"
+						 onDragEnter={e => boardDragEnterHandler(e)}
+						 onDragOver={e => boardDragOverHandler(e)}
+						 onDrop={e => boardDropHandler(e)}
+					>
 						{launches.length > 0 && (
-							launches.map((launchData, index) => (
-								<Card launchData={launchData} key={index} type={'current'} />
-							))
+							launches.map((card, index) => {
+								return card.reserved < 1 ?
+									<Card card={card} key={index} draggable={true} setCurrentCard={setCurrentCard} />
+									: ''
+							})
 						)}
 					</div>
 				</div>
 				<div className="board-column">
 					<h2>My launches</h2>
-					<div className="board">
-						Cards
+					<div className="board"
+						 onDragEnter={e => boardDragEnterHandler(e)}
+						 onDragOver={e => boardDragOverHandler(e)}
+						 onDrop={e => boardDropHandler(e)}
+					>
+						{launches.length > 0 && (
+							launches.map((card, index) => {
+								return card.reserved > 0 ?
+									<Card card={card} key={index} draggable={true} setCurrentCard={setCurrentCard} />
+									: ''
+							})
+						)}
 					</div>
 				</div>
 			</div>
