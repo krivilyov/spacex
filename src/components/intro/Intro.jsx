@@ -1,6 +1,7 @@
 import './intro.css';
 import earth from '../../images/earth.png';
 import Card from '../card/Card';
+import Modal from '../modal/Modal';
 import {useState, useEffect} from "react";
 import axios from "axios";
 
@@ -8,6 +9,8 @@ export default function Intro () {
 	const [pastLaunches, setPastLaunches] = useState([]);
 	const [launches, setLaunches] = useState([]);
 	const [currentCard, setCurrentCard] = useState(null);
+	const [modalOpen, setModalOpen] = useState(false);
+	const [unReserve, setUnReserve] = useState(false);
 
 	useEffect(() => {
 		const getLaunches = async () => {
@@ -53,6 +56,12 @@ export default function Intro () {
 
 	}, []);
 
+	useEffect(() => {
+		if(unReserve) {
+			updateLaunches();
+		}
+	},[unReserve])
+
 	function boardDragOverHandler (e) {
 		e.preventDefault();
 	}
@@ -60,23 +69,33 @@ export default function Intro () {
 	function boardDropHandler (e) {
 		e.preventDefault();
 
-		if(currentCard) {
-			// find card by id in our array and change status reserved
-			const changedLaunches = launches.map(function (current){
-				let launche = Object.assign({}, current);
-				if (launche.id === currentCard.id) {
-					if(currentCard.reserved < 1) {
-						launche.reserved = 1;
-					} else {
-						launche.reserved = 0;
-					}
-				}
-
-				return launche;
-			})
-
-			setLaunches(changedLaunches);
+		if(currentCard && currentCard.reserved > 0) {
+			//show popup
+			setModalOpen(true);
 		}
+
+
+		if(currentCard && currentCard.reserved < 1) {
+			updateLaunches();
+		}
+	}
+
+	function updateLaunches () {
+		// find card by id in our array and change status reserved
+		const changedLaunches = launches.map(function (current){
+			let launche = Object.assign({}, current);
+			if (launche.id === currentCard.id) {
+				if(currentCard.reserved < 1) {
+					launche.reserved = 1;
+				} else {
+					launche.reserved = 0;
+				}
+			}
+
+			return launche;
+		})
+
+		setLaunches(changedLaunches);
 	}
 
 	return (
@@ -127,8 +146,10 @@ export default function Intro () {
 						)}
 					</div>
 				</div>
+				{modalOpen && (
+					<Modal setUnReserve={setUnReserve} setModalOpen={setModalOpen} />
+				)}
 			</div>
-
 		</div>
 	);
 }

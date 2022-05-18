@@ -25,6 +25,7 @@ h1 {
 }
 
 .board-section {
+    position: relative;
     display: flex;
 }
 
