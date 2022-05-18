@@ -10,7 +10,7 @@ export default function Card (props) {
 
 	return (
 		<Link to={`/launch/${card.id}`} className="card-link">
-			<div className="card"
+			<div className={`card ${!draggable ? `not-draggable` : `` }`}
 				 draggable={draggable}
 				 onDragStart={(e) => dragStartHandler(e, card)}
 			>
