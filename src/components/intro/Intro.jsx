@@ -9,6 +9,7 @@ export default function Intro () {
 	const [pastLaunches, setPastLaunches] = useState([]);
 	const [launches, setLaunches] = useState([]);
 	const [currentCard, setCurrentCard] = useState(null);
+	const [dragStartBoardId, setDragStartBoardId] = useState(null);
 	const [modalOpen, setModalOpen] = useState(false);
 	const [unReserve, setUnReserve] = useState(false);
 
@@ -67,18 +68,21 @@ export default function Intro () {
 		e.preventDefault();
 	}
 
-	function boardDropHandler (e) {
+	function boardDropHandler (e, boardId) {
 		e.preventDefault();
 
-		if(currentCard && currentCard.reserved > 0) {
-			//show popup
-			setModalOpen(true);
+		//check board for drop
+		if(dragStartBoardId !== boardId) {
+			if(currentCard && currentCard.reserved > 0) {
+				//show popup
+				setModalOpen(true);
+			}
+
+			if(currentCard && currentCard.reserved < 1) {
+				updateLaunches();
+			}
 		}
 
-
-		if(currentCard && currentCard.reserved < 1) {
-			updateLaunches();
-		}
 	}
 
 	function updateLaunches () {
@@ -120,8 +124,9 @@ export default function Intro () {
 				<div className="board-column">
 					<h2>Launches</h2>
 					<div className="board"
+						 onDragStart={e => setDragStartBoardId(1)}
 						 onDragOver={e => boardDragOverHandler(e)}
-						 onDrop={e => boardDropHandler(e)}
+						 onDrop={e => boardDropHandler(e, 1)}
 					>
 						{launches.length > 0 && (
 							launches.map((card, index) => {
@@ -135,8 +140,9 @@ export default function Intro () {
 				<div className="board-column">
 					<h2>My launches</h2>
 					<div className="board"
+						 onDragStart={e => setDragStartBoardId(2)}
 						 onDragOver={e => boardDragOverHandler(e)}
-						 onDrop={e => boardDropHandler(e)}
+						 onDrop={e => boardDropHandler(e, 2)}
 					>
 						{launches.length > 0 && (
 							launches.map((card, index) => {

@@ -8,10 +8,6 @@
     margin-bottom: 15px;
 }
 
-.card:last-child {
-    margin-bottom: 0;
-}
-
 .card-title {
     text-transform: uppercase;
     font-weight: bold;
@@ -22,4 +18,14 @@
 .card-description {
     font-size: 18px;
     line-height: 24px;
+}
+
+.card-link {
+    text-decoration: none;
+    color: #000;
+    margin-bottom: 15px;
+}
+
+.card-link:last-child {
+    margin-bottom: 0;
 }

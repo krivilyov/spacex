@@ -1,0 +1,32 @@
+.back-link {
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px solid #000;
+}
+
+.back-link:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+
+.launch-info-title {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 48px;
+    line-height: 52px;
+}
+
+.date {
+    text-align: center;
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 40px;
+}
+
+.image-container {
+    text-align: center;
+}
+
+.image-container img {
+    width: 200px;
+    height: 200px;
+}

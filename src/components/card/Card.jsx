@@ -1,4 +1,5 @@
 import './card.css';
+import { Link } from "react-router-dom";
 
 export default function Card (props) {
 	const {card, draggable, setCurrentCard} = props;
@@ -8,14 +9,16 @@ export default function Card (props) {
 	}
 
 	return (
-		<div className="card"
-			 draggable={draggable}
-			 onDragStart={(e) => dragStartHandler(e, card)}
-		>
-			<div className="card-title">{card.name}</div>
-			<div className="card-description">
-				{card.date_local}
+		<Link to={`/launch/${card.id}`} className="card-link">
+			<div className="card"
+				 draggable={draggable}
+				 onDragStart={(e) => dragStartHandler(e, card)}
+			>
+				<div className="card-title">{card.name}</div>
+				<div className="card-description">
+					{card.date_local}
+				</div>
 			</div>
-		</div>
+		</Link>
 	);
 }
