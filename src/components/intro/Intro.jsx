@@ -59,6 +59,7 @@ export default function Intro () {
 	useEffect(() => {
 		if(unReserve) {
 			updateLaunches();
+			setUnReserve(false);
 		}
 	},[unReserve])
 

@@ -5,8 +5,8 @@ export default function Modal (props) {
 
 	function agreeHandler (e) {
 		e.preventDefault();
-		setModalOpen(false);
 		setUnReserve(true);
+		setModalOpen(false);
 	}
 
 	function notAgreeHandler (e) {
